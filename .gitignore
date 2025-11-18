@@ -1,0 +1,96 @@
+# ============================================================
+#  Python Project .gitignore
+# ============================================================
+# -----------------------
+# Data & Simulation Output
+# -----------------------
+
+# Global results folder — DO NOT TRACK
+results/
+
+# Raw or processed data
+data/
+
+# Large numeric files
+*.npz
+*.npy
+*.h5
+*.hdf5
+*.mat
+*.csv
+
+# -----------------------
+# Plots & Figures
+# -----------------------
+*.png
+*.pdf
+*.svg
+*.eps
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+
+# -----------------------
+# Python cache and build
+# -----------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg*
+build/
+dist/
+.eggs/
+
+# Compiled C/C++/Numba intermediates
+*.c
+*.cpp
+*.html
+*.o
+*.obj
+*.dll
+*.dylib
+
+# -----------------------
+# Environments
+# -----------------------
+env/
+venv/
+.venv/
+*.env
+*.venv
+pip-wheel-metadata/
+conda-meta/
+*.conda
+*.lock
+
+# -----------------------
+# Jupyter notebooks
+# -----------------------
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+
+# -----------------------
+# Logs
+# -----------------------
+logs/
+*.log
+
+# -----------------------
+# VSCode
+# -----------------------
+.vscode/
+*.code-workspace
+
+# -----------------------
+# OS junk files
+# -----------------------
+.DS_Store
+Thumbs.db
+*~
+*.bak
+*.swp
+*.swo
