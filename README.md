@@ -9,7 +9,13 @@ A tunnel junction model for a Josephson junction with composite insulator-ferroe
 Simulation scripts can be simply used as
 
 ```
-python -m src.experiments
+python -m src.experiments.<experiment_name>
+```
+
+For example,
+
+```
+python -m src.experiments.polarization_dependence
 ```
 
 ## Citation
