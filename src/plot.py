@@ -2,10 +2,8 @@ import numpy as np
 import os
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from matplotlib.colors import LogNorm
 from matplotlib.ticker import MultipleLocator
-from .conf.CONSTANTS import *  # import constants
+from .conf.CONSTANTS import e
 # import scienceplots
 
 # plt.style.use(['science','nature'])
@@ -67,43 +65,6 @@ def plot_potential_profile(x, y_p, y_m, d, index, fn=None, show=False):
     return fig, ax
 
 
-# def _plot_Jc_vs_polarization_combined(J_c, eta, P, x, y_p, y_m, l_1, l_2, d, U_0, U_1, U_2, fn=None, show=False):
-#     fig, ax1 = plt.subplots(figsize=(2.4, 2))
-#     fig.tight_layout()
-#     J_c = J_c * 1e-3  # convert the unit to nA/um2
-#     ax1.plot(P*100, J_c, linestyle='-', color='black', linewidth=1.5)
-#     ax1.set_xlabel('P' + r' $(\mu C/cm^2)$')
-#     ax1.set_ylabel(r'$J_c$' + r' $(nA/\mu m^2)$')
-#     ax2 = ax1.twinx()
-#     ax2.plot(100*P[np.where(P >= 0)], eta[np.where(P >= 0)],
-#              linestyle='--', color='black', linewidth=1.5)
-#     ax2.set_ylim(-0.1, 1)
-#     ax2.set_ylabel(r'$\eta$')
-#     axin = ax1.inset_axes([0.32, 0.55, 0.4, 0.4])
-#     d = d*1e9
-#     x = x*1e9
-#     y_p = y_p/e
-#     y_m = y_m/e
-#     axin.plot(x, y_p, linestyle='-', linewidth=1.5, color='blue')
-#     axin.plot(x, y_m, linestyle='--', linewidth=1.5, color='red')
-#     axin.axvline(x=0, ymin=0, ymax=1, color='grey',
-#                  linestyle='--', linewidth=1, alpha=0.5)
-#     axin.axvline(x=d, ymin=0, ymax=1, color='grey',
-#                  linestyle='--', linewidth=1, alpha=0.5)
-#     axin.set_ylim([0, None])
-#     axin.set_xlabel('x (nm)')
-#     axin.set_ylabel('U (eV)')
-#     axin.tick_params(axis='both', which='major', pad=2)
-#     if fn is not None:
-#         if not os.path.exists(fn):
-#             os.makedirs(fn)
-#         fn = os.path.join(fn, f'Jc-P_profile_combined.png')
-#         plt.savefig(fn, dpi=600, bbox_inches='tight')
-#     if show:
-#         plt.show()
-#     return fig, ax1
-
-
 def plot_Jc_vs_polarization(P, J_c):
     fig, ax = plt.subplots(figsize=(1.7, 1.7))
     colors = ['black', '#0000a2', '#bc272d', '#e9c716']
@@ -157,10 +118,6 @@ def plot_Jc_vs_polarization_compare_sep(P, J_c_ana, J_c_num):
                 linestyle='-', linewidth=1.2, label='Numerical')
         ax.plot(P*100, J_c_ana[n]*1e-3, color=colors[n],
                 linestyle='--', linewidth=1.2, label='Analytical')
-        # ax.set_ylabel(r'$J_c$', fontsize=8)
-        # ax.legend(loc='upper right', fontsize=6, frameon=False)
-        # if n < 3:
-        #     ax.tick_params(labelbottom=False)
     axes[0].set_ylim(250, 500)
     axes[1].set_ylim(70, 180)
     axes[2].set_ylim(top=25)
@@ -185,37 +142,6 @@ def plot_analytical_approximation_check(k, data_exact, data_approx):
     ax.set_ylabel('k*T')
     ax.legend(loc='upper right', fontsize=6, frameon=False)
     return fig, ax
-
-
-# def plot_WKB_phase(P, gamma_0, gamma_1, gamma_2, l_1, l_2, d, U_0, U_1, U_2, fn=None, show=False):
-#     fig, ax = plt.subplots()
-#     gamma = gamma_0+gamma_1+gamma_2
-#     ax.plot(P, gamma, linestyle='-', linewidth=2, color='red')
-#     # ax.plot(P,gamma_0,linestyle='--',linewidth=2,color='orange')
-#     # ax.plot(P,gamma_1,linestyle='--',linewidth=2,color='green')
-#     # ax.plot(P,gamma_2,linestyle='--',linewidth=2,color='blue')
-#     if fn is not None:
-#         if not os.path.exists(fn):
-#             os.makedirs(fn)
-#         fn = os.path.join(fn, f'Phase-P_relation.png')
-#         plt.savefig(fn, dpi=600, bbox_inches='tight')
-#     if show:
-#         plt.show()
-#     return fig, ax
-
-
-# def plot_Jc_countour(Jc, delta_l, delta_U):
-#     fig, ax = plt.subplots(figsize=(1.4, 1.4))
-#     contourf = ax.contourf(delta_l*1e9, delta_U/e, Jc*1e-3, norm=LogNorm())
-#     # contour = ax.contour(
-#     #     contourf, levels=[0.3, 0.6, 0.8], colors='k', linestyles='--', linewidths=0.5)
-#     # ax.clabel(contour, inline=True, fontsize=8)
-#     plt.xlabel(r'$l_2-l_1$'+' (nm)')
-#     plt.ylabel(r'$U_2-U_1$'+' (eV)')
-#     cbar_ax = fig.add_axes([0.95, 0.122, 0.05, 0.7])
-#     cbar = fig.colorbar(contourf, format="%0.2f", cax=cbar_ax)
-#     cbar.ax.set_title(r'$J_c$')
-#     return fig, ax
 
 
 def plot_efficiency_countour(efficiency, delta_l, delta_U):
@@ -367,57 +293,4 @@ def plot_efficiency_vs_material_contour(efficiency, delta, rPerm_FE):
     cbar.ax.set_title(r'$\eta$')
     cbar.set_ticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
     cbar.set_ticklabels([0, 0.2, 0.4, 0.6, 0.8, 1.0])
-    return fig, ax
-
-
-def plot_efficiency_vs_potential(efficiency, delta_U, P, l_1, l_2, d, delta, U_0, fn=None, show=False):
-    fig, ax = plt.subplots(figsize=(2, 2))
-    # plt.axis('square')
-    fig.tight_layout()
-    colors = ['green', 'blue', 'red']
-    styles = ['-', '', '']
-    markers = ['', '^', '.']
-    for i, (x, y) in enumerate(zip(delta_U, efficiency)):
-        ax.plot(x/e, y, linewidth=1,
-                color=colors[i], linestyle=styles[i], marker=markers[i], markersize=1.5)
-
-    plt.xlabel(r'$U_2-U_1$'+' (eV)')
-    plt.ylabel(r'$\eta$')
-    ax.legend(['U=2eV', 'U=1eV', 'U=0.5eV'], loc=3,
-              handletextpad=0.1, handlelength=1)
-    if fn is not None:
-        if not os.path.exists(fn):
-            os.makedirs(fn)
-        fn = os.path.join(fn, f'efficiency_potential.png')
-        plt.savefig(fn, dpi=600, bbox_inches='tight')
-    if show:
-        plt.show()
-    return fig, ax
-
-
-def plot_efficiency_vs_thickdiff_barrierdiff(efficiency_1, efficiency_2, delta_l, delta_U, fn=None, show=False):
-    fig, ax = plt.subplots(1, 2, sharey=True, figsize=(2, 2))
-    fig.tight_layout()
-    plt.subplots_adjust(wspace=0)
-    colors = ['green', 'blue', 'red']
-    styles = ['-', '', '']
-    markers = ['', '^', '.']
-    for i, (x, y) in enumerate(zip(delta_l, efficiency_1)):
-        ax[0].plot(x*1e9, y, linewidth=1, color=colors[i],
-                   linestyle=styles[i], marker=markers[i], markersize=1)
-    for i, (x, y) in enumerate(zip(delta_U, efficiency_2)):
-        ax[1].plot(x/e, y, linewidth=1, color=colors[i],
-                   linestyle=styles[i], marker=markers[i], markersize=1)
-    ax[0].set_xlabel(r'$l_2-l_1$'+' (nm)')
-    ax[1].set_xlabel(r'$U_2-U_1$'+' (eV)')
-    ax[0].set_ylabel(r'$\eta$')
-    ax[0].legend(['L=4nm', 'L=3nm', 'L=2nm'])
-    ax[1].legend()
-    if fn is not None:
-        if not os.path.exists(fn):
-            os.makedirs(fn)
-        fn = os.path.join(fn, f'efficiency_thick_barrier.png')
-        plt.savefig(fn, dpi=600, bbox_inches='tight')
-    if show:
-        plt.show()
     return fig, ax

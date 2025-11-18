@@ -1,10 +1,9 @@
 import numpy as np
 from tqdm import tqdm
 import src.func_SIFEIS as SIFEIS
-from .plot import *
+from .plot import plot_potential_profile, plot_Jc_vs_polarization, plot_efficiency_vs_polarization, plot_Jav_vs_polarization, plot_Jc_vs_polarization_compare_sep, plot_analytical_approximation_check, plot_efficiency_vs_thicknesses_contour, plot_efficiency_vs_barriers_contour, plot_efficiency_countour, plot_efficiency_vs_thickness, plot_efficiency_vs_d, plot_efficiency_vs_material_contour
+from .conf.CONSTANTS import e
 import time
-
-plt.style.use(['./src/conf/prb.mplstyle'])
 
 
 ############ SIFEIS ##############
@@ -262,58 +261,3 @@ def Plot_material_dependence(data_file_name, FIG_folder):
         data_eta, data_delta, data_rPerm_FE)
     fig.savefig(figure_file_name)
     return figure_file_name
-
-
-# def Efficiency_vs_d(E, P, l_1, l_2, d, delta, U_0, U_1, U_2, rPerm_FE, Gap_Sc, FIG_folder):
-#     plot_data_efficiency_all = []
-#     for n, rp in enumerate(rPerm_FE):
-#         plot_data_efficiency = SIFEIS.efficiency_WKB(
-#             E, P, d, l_1, l_2, delta, U_0, U_1, U_2, rp, Gap_Sc)
-#         plot_data_efficiency_all.append(plot_data_efficiency)
-#     plot_data_d = d
-#     plot_data_rPerm = rPerm_FE
-#     return plot_efficiency_vs_d(plot_data_efficiency_all, plot_data_d, plot_data_rPerm, FIG_folder, show=False)
-
-
-# def Efficiency_vs_ThickDiff_PotentialDiff_contour(E, P, L_tot, d, delta, U_0, U_tot, rPerm_FE, Gap_Sc, FIG_folder):
-#     l_1 = np.linspace(0, L_tot, 51)
-#     l_2 = L_tot-l_1
-#     U_1 = np.linspace(0.1*e, U_tot-0.1*e, 51)
-#     U_2 = U_tot-U_1
-#     plot_data_delta_l = l_2 - l_1  # gives l_2 - l_1
-#     plot_data_delta_U = U_2 - U_1  # gives U_2 - U_1
-#     plot_data_delta_l, plot_data_delta_U = np.meshgrid(
-#         plot_data_delta_l, plot_data_delta_U)
-#     l_1_mesh = (L_tot-plot_data_delta_l)/2
-#     l_2_mesh = (L_tot+plot_data_delta_l)/2
-#     U_1_mesh = (U_tot-plot_data_delta_U)/2
-#     U_2_mesh = (U_tot+plot_data_delta_U)/2
-#     plot_data_efficiency = SIFEIS.efficiency_WKB(
-#         E, P, d, l_1_mesh, l_2_mesh, delta, U_0, U_1_mesh, U_2_mesh, rPerm_FE, Gap_Sc)
-#     return plot_efficiency_countour(plot_data_efficiency, plot_data_delta_l, plot_data_delta_U, P, d, delta, l_1, U_0, U_1, FIG_folder, show=False)
-
-
-# def Efficiency_vs_ThickDiff_PotentialDiff(E, P, L_tot, d, delta, U_0, U_tot, rPerm_FE, Gap_Sc, FIG_folder):
-#     l_1 = np.linspace(0, L_tot, 51)
-#     l_2 = L_tot-l_1
-#     U_1 = np.array([U_tot/2, U_tot/5, U_tot*4/5])
-#     U_2 = U_tot-U_1
-#     plot_data_delta_l = l_2 - l_1  # gives l_2 - l_1
-#     U_diff = U_2 - U_1  # gives U_2 - U_1
-#     plot_data_efficiency_all = []
-#     for n, u_d in enumerate(U_diff):
-#         plot_data_efficiency = SIFEIS.efficiency_WKB(
-#             E, P, d, l_1, l_2, delta, U_0, U_1[n], U_2[n], rPerm_FE, Gap_Sc)
-#         plot_data_efficiency_all.append(plot_data_efficiency)
-#     return plot_efficiency_vs_thickness(plot_data_efficiency_all, plot_data_delta_l, U_diff, P, d, delta, l_1, U_0, U_1, FIG_folder, show=False)
-
-
-# def Efficiency_vs_d(E, P, l_1, l_2, d, delta, U_0, U_1, U_2, rPerm_FE, Gap_Sc, FIG_folder):
-#     plot_data_efficiency_all = []
-#     for n, rp in enumerate(rPerm_FE):
-#         plot_data_efficiency = SIFEIS.efficiency_WKB(
-#             E, P, d, l_1, l_2, delta, U_0, U_1, U_2, rp, Gap_Sc)
-#         plot_data_efficiency_all.append(plot_data_efficiency)
-#     plot_data_d = d
-#     plot_data_rPerm = rPerm_FE
-#     return plot_efficiency_vs_d(plot_data_efficiency_all, plot_data_d, plot_data_rPerm, FIG_folder, show=False)

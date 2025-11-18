@@ -26,13 +26,6 @@ def potential_profile(P, l_1, l_2, d, delta, U_0, U_1, U_2, rPerm_FE):
     return x, U_total_p, U_total_m
 
 
-# def wave_vector_exp(x,E,P,d,delta,U,rPerm_FE):ch
-#     V_tilt = e * P * d*delta/Perm_0/(2*rPerm_FE*delta+d)
-#     es_potential = V_tilt*np.exp(x/delta) if x <= 0 else V_tilt*np.exp(-x/delta)
-#     wave_vector = np.sqrt(2*m_e)/hbar * np.sqrt(es_potential+U-E)
-#     return wave_vector
-
-
 def wave_vector_lin(x, E, Ef, P, d, delta, U_0, rPerm_FE):
     V_tilt = e * P * d*delta/Perm_0/(2*rPerm_FE*delta+d)
     es_potential = V_tilt - (2*V_tilt/d) * x
@@ -40,18 +33,10 @@ def wave_vector_lin(x, E, Ef, P, d, delta, U_0, rPerm_FE):
     return wave_vector
 
 
-# def wave_vector_flat(x, E, P, d, delta, U_0, rPerm_FE):
-#     V_tilt = e * P * d*delta/Perm_0/(2*rPerm_FE*delta+d)
-#     es_potential = V_tilt if x <= 0 else -V_tilt
-#     wave_vector = np.sqrt(2*m_e)/hbar * np.sqrt(es_potential+U_0-E)
-#     return wave_vector
-
-
 def WKB_phase(E, Ef, P, l_1, l_2, d, delta, U_0, U_1, U_2, rPerm_FE):
     V_tilt = e * P * d*delta/Perm_0/(2*rPerm_FE*delta+d)
     V_1 = U_1 + V_tilt - E + Ef
     V_2 = U_2 - V_tilt - E + Ef
-    # print(f'V_tilt={V_tilt/e}eV, V_1={V_1/e}eV, V_2={V_2/e}eV')
     gamma_1 = l_1 * np.sqrt(np.abs(V_1)) * np.sqrt(2*m_e)/hbar
     gamma_2 = l_2 * np.sqrt(np.abs(V_2)) * np.sqrt(2*m_e)/hbar
     gamma_0 = quad(wave_vector_lin, 0, d, args=(
